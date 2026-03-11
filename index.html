@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodrigo Teixeira | Desenvolvedor & Entusiasta em IA</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#1c1917', // Stone 900
+                        darker: '#0c0a09', // Stone 950
+                        primary: '#ea580c', // Orange 600
+                        secondary: '#14b8a6', // Teal 500
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for Animations -->
+    <style>
+        body {
+            background-color: #0c0a09;
+            /* darker stone */
+            color: #f5f5f4;
+            /* stone-100 */
+        }
+
+        .glass-nav {
+            background: rgba(28, 25, 23, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(41, 37, 36, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(234, 88, 12, 0.3);
+            border-color: rgba(234, 88, 12, 0.5);
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typing Effect cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #ea580c, #14b8a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Profile Image Crossfade Carousel */
+        .profile-img-fade {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: profileFadeAnim 12s infinite ease-in-out;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-img-fade:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .profile-img-fade:nth-child(2) {
+            animation-delay: 4s;
+        }
+
+        .profile-img-fade:nth-child(3) {
+            animation-delay: 8s;
+        }
+
+        @keyframes profileFadeAnim {
+
+            0%,
+            25% {
+                opacity: 1;
+            }
+
+            33%,
+            92% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .group:hover .profile-img-fade {
+            transform: scale(1.05);
+        }
+
+        /* Language Toggle Animation */
+        .bg-flag-pt {
+            background: linear-gradient(135deg, #009c3b 35%, #ffdf00 50%, #002776 65%);
+            background-size: 200% 200%;
+            animation: moveGradient 4s ease infinite alternate;
+        }
+
+        .bg-flag-us {
+            background: linear-gradient(135deg, #0a3161 35%, #ffffff 50%, #b31942 65%);
+            background-size: 200% 200%;
+            animation: moveGradient 4s ease infinite alternate;
+        }
+
+        @keyframes moveGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-4">
+                    <div class="flex-shrink-0 font-heading font-bold text-2xl tracking-tighter">
+                        R<span class="text-primary">E</span>T<span class="text-primary">.</span>
+                    </div>
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle"
+                        class="relative inline-flex items-center h-8 rounded-full w-20 transition-all duration-500 bg-flag-pt overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.5)] focus:outline-none hover:scale-105 group border border-white/10">
+                        <span
+                            class="absolute inset-0 bg-black/20 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-0"></span>
+                        <span
+                            class="absolute left-1 flex items-center justify-center w-8 h-8 text-sm font-bold transition-all duration-500 z-10 text-stone-900 drop-shadow-sm"
+                            id="lang-pt">PT</span>
+                        <span
+                            class="absolute right-1 flex items-center justify-center w-8 h-8 text-sm font-bold transition-all duration-500 opacity-50 scale-90 z-10 text-white drop-shadow-md"
+                            id="lang-en">EN</span>
+                        <span
+                            class="absolute left-1 inline-block w-8 h-6 transform bg-white shadow-lg rounded-full transition-transform duration-500 ease-in-out z-0"
+                            id="lang-thumb"></span>
+                    </button>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home"
+                            class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Início</a>
+                        <a href="#sobre"
+                            class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Sobre
+                            Mim</a>
+                        <a href="#habilidades"
+                            class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Habilidades</a>
+                        <a href="#experiencia"
+                            class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Experiência</a>
+                        <a href="#educacao"
+                            class="hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Formação</a>
+                        <a href="#contato"
+                            class="bg-primary hover:bg-cyan-600 text-white px-5 py-2 rounded-full text-sm font-medium transition-colors shadow-[0_0_15px_rgba(6,182,212,0.4)]">Contato</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-nav absolute w-full border-b border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="#home"
+                    class="hover:text-primary block px-3 py-2 rounded-md text-base font-medium mobile-link">Início</a>
+                <a href="#sobre"
+                    class="hover:text-primary block px-3 py-2 rounded-md text-base font-medium mobile-link">Sobre
+                    Mim</a>
+                <a href="#habilidades"
+                    class="hover:text-primary block px-3 py-2 rounded-md text-base font-medium mobile-link">Habilidades</a>
+                <a href="#experiencia"
+                    class="hover:text-primary block px-3 py-2 rounded-md text-base font-medium mobile-link">Experiência</a>
+                <a href="#educacao"
+                    class="hover:text-primary block px-3 py-2 rounded-md text-base font-medium mobile-link">Formação</a>
+                <a href="#contato"
+                    class="hover:text-primary block px-3 py-2 rounded-md text-base font-medium mobile-link">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Blobs -->
+        <div
+            class="absolute top-0 -left-4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob">
+        </div>
+        <div
+            class="absolute top-0 -right-4 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute -bottom-8 left-20 w-72 h-72 bg-rose-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000">
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            <p class="text-primary font-medium tracking-wide mb-4 reveal">Olá, eu sou</p>
+            <h1 class="text-5xl md:text-7xl font-heading font-bold mb-6 reveal" style="transition-delay: 100ms;">
+                Rodrigo Teixeira
+            </h1>
+            <div class="text-xl md:text-3xl text-gray-300 mb-8 h-12 reveal" style="transition-delay: 200ms;">
+                <span id="typing-text" class="typing-cursor font-light"></span>
+            </div>
+            <p class="max-w-2xl mx-auto text-gray-400 mb-10 text-lg reveal" style="transition-delay: 300ms;">
+                Entusiasta da cultura de <span class="text-white">"fazer a tecnologia trabalhar por mim"</span>. Uno o
+                poder da Inteligência Artificial, desenvolvimento de software e uma comunicação assertiva para otimizar
+                processos e criar soluções inovadoras.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal"
+                style="transition-delay: 400ms;">
+                <a href="https://linkedin.com/in/rodrigo-espinosa-teixeira/" target="_blank"
+                    class="w-full sm:w-auto px-8 py-3 bg-transparent border border-gray-500 text-white rounded-full font-medium hover:border-white hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                    <i class="fab fa-linkedin text-xl"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 z-20 reveal"
+            style="transition-delay: 500ms;">
+            <a href="#sobre"
+                class="flex flex-col items-center gap-2 text-gray-500 hover:text-primary transition-colors duration-300 animate-bounce cursor-pointer">
+                <span class="text-xs tracking-widest uppercase font-medium">Saiba mais</span>
+                <i class="fas fa-chevron-down text-xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Sobre Mim -->
+    <section id="sobre" class="py-24 bg-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Sobre <span
+                        class="text-gradient">Mim</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <div class="relative">
+                        <!-- Foto de Perfil / Carrossel -->
+                        <div
+                            class="aspect-square rounded-2xl bg-gradient-to-tr from-stone-800 to-stone-900 border border-stone-700 flex items-center justify-center overflow-hidden shadow-2xl relative z-10 group">
+                            <img src="foto luz.jpg" alt="Rodrigo Teixeira" class="profile-img-fade">
+                            <img src="eu polo.png" alt="Rodrigo Teixeira" class="profile-img-fade">
+                            <img src="eu teatro.png" alt="Rodrigo Teixeira" class="profile-img-fade">
+                        </div>
+                        <div
+                            class="absolute -inset-4 border-2 border-primary/30 rounded-2xl z-0 transform translate-x-4 translate-y-4">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6 text-gray-300 reveal" style="transition-delay: 200ms;">
+                    <p class="text-lg leading-relaxed">
+                        Sou um apaixonado por tecnologia em busca da minha primeira oportunidade profissional. Tenho
+                        formação em <strong class="text-white">Análise e Desenvolvimento de Sistemas</strong> e sou
+                        estudante de <strong class="text-white">Administração</strong>. Minha missão é usar a tecnologia
+                        para agregar valor, aprender continuamente e gerar resultados positivos.
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        Sou um especialista prático no uso avançado de <strong class="text-primary">Inteligência
+                            Artificial Generativa</strong>. No meu dia a dia, transformo essas ferramentas em aliadas
+                        poderosas para resolver problemas complexos, codificar com eficiência e automatizar fluxos de
+                        trabalho de forma inteligente e ágil.
+                    </p>
+                    <div class="p-6 glass-card rounded-xl border-l-4 border-l-primary mt-6">
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                            <i class="fas fa-theater-masks text-primary"></i> O Diferencial da Oratória
+                        </h3>
+                        <p class="text-sm text-gray-400">
+                            Minha atuação no teatro (Cena IV Shakespeare Cia.) desenvolveu minha oratória, inteligência
+                            emocional e capacidade de explicar ideias complexas com clareza, mesmo para quem não tem
+                            conhecimento técnico. Consigo aliar a frieza dos dados com o calor da comunicação humana.
+                        </p>
+                    </div>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            <span>São João da Boa Vista, SP</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-car text-primary"></i>
+                            <span>CNH Categoria B (Disponível para viagens)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="habilidades" class="py-24 bg-darker relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Minhas <span
+                        class="text-gradient">Habilidades</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">A combinação perfeita entre habilidades técnicas (Hard
+                    Skills) e comportamentais (Soft Skills).</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- IA & Automação -->
+                <div class="glass-card p-8 rounded-2xl reveal">
+                    <div
+                        class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center text-primary text-2xl mb-6">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">IA & Automação</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary text-sm"></i>
+                            Engenharia de Prompt</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary text-sm"></i> IA
+                            Generativa Avançada</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary text-sm"></i>
+                            Automação de Fluxos de Trabalho</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-primary text-sm"></i>
+                            Automação Administrativa</li>
+                    </ul>
+                </div>
+
+                <!-- Desenvolvimento & Dados -->
+                <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay: 150ms;">
+                    <div
+                        class="w-14 h-14 bg-secondary/20 rounded-xl flex items-center justify-center text-secondary text-2xl mb-6">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Dev & Dados</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300">Python</span>
+                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300">SQL
+                            / MySQL</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300">Flutter
+                            (Dart)</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300">Node.js</span>
+                        <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300">AWS
+                            Cloud</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-gray-300">Redes
+                            (CCNA)</span>
+                    </div>
+                </div>
+
+                <!-- Soft Skills & Gestão -->
+                <div class="glass-card p-8 rounded-2xl reveal" style="transition-delay: 300ms;">
+                    <div
+                        class="w-14 h-14 bg-rose-500/20 rounded-xl flex items-center justify-center text-rose-400 text-2xl mb-6">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Gestão & Comunicação</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-rose-400 text-sm"></i>
+                            Oratória & Fala em Público</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-rose-400 text-sm"></i>
+                            Organização de Processos</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-rose-400 text-sm"></i>
+                            Redação & Inglês Avançado</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-rose-400 text-sm"></i>
+                            Gestão de Projetos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiência & Projetos -->
+    <section id="experiencia" class="py-24 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Experiência & <span
+                        class="text-gradient">Projetos</span></h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="relative border-l-2 border-gray-800 ml-3 md:ml-6 space-y-12 pb-8">
+
+                <!-- Projeto Moodly -->
+                <div class="relative pl-8 md:pl-10 reveal">
+                    <div class="absolute w-6 h-6 bg-darker rounded-full border-4 border-primary -left-[13px] top-1">
+                    </div>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Analista de Soluções / Desenvolvedor</h3>
+                                <h4 class="text-lg text-primary font-medium">Projeto Moodly (App Mobile com IA)</h4>
+                            </div>
+                            <span
+                                class="mt-2 md:mt-0 px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold inline-block border border-primary/20 w-max">2025</span>
+                        </div>
+                        <p class="text-gray-400 mb-4 leading-relaxed">
+                            Gestão do ciclo de vida completo do projeto (prototipagem, implementação e testes).
+                            Desenvolvimento de uma solução multiplataforma para monitoramento de bem-estar e organização
+                            pessoal.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2 mb-4">
+                            <li>Desenvolvimento mobile utilizando <strong>Flutter</strong> focando na experiência do
+                                usuário (UX).</li>
+                            <li>Implementação estratégica de <strong>Inteligência Artificial</strong> para análise de
+                                sentimentos e geração de insights e relatórios personalizados.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">Flutter</span>
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">GenAI</span>
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">Dart</span>
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">UX/UI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONG -->
+                <div class="relative pl-8 md:pl-10 reveal">
+                    <div class="absolute w-6 h-6 bg-darker rounded-full border-4 border-secondary -left-[13px] top-1">
+                    </div>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Suporte Estratégico e Tecnológico</h3>
+                                <h4 class="text-lg text-secondary font-medium">Projeto Beneficente (ONG)</h4>
+                            </div>
+                            <span
+                                class="mt-2 md:mt-0 px-4 py-1 bg-secondary/10 text-secondary rounded-full text-sm font-semibold inline-block border border-secondary/20 w-max">2024</span>
+                        </div>
+                        <p class="text-gray-400 mb-4 leading-relaxed">
+                            Atuação consultiva para entender as necessidades da instituição, propondo melhorias
+                            tecnológicas e organizando rotinas administrativas.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2 mb-4">
+                            <li>Otimização e modernização de processos internos utilizando <strong>Node.js</strong> e
+                                <strong>MySQL</strong>.
+                            </li>
+                            <li>Estruturação e controle de banco de dados para facilitar a gestão e a tomada de decisão.
+                            </li>
+                            <li>Criação de APIs, interfaces visuais e materiais de apresentação institucional.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">Node.js</span>
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">MySQL</span>
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">Consultoria</span>
+                            <span class="text-xs bg-dark px-2 py-1 rounded text-gray-400">Automação</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teatro -->
+                <div class="relative pl-8 md:pl-10 reveal">
+                    <div class="absolute w-6 h-6 bg-darker rounded-full border-4 border-rose-500 -left-[13px] top-1">
+                    </div>
+                    <div class="glass-card p-6 md:p-8 rounded-2xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Ator e Estudante de Oratória</h3>
+                                <h4 class="text-lg text-rose-400 font-medium">Cena IV Shakespeare Cia.</h4>
+                            </div>
+                            <span
+                                class="mt-2 md:mt-0 px-4 py-1 bg-rose-500/10 text-rose-400 rounded-full text-sm font-semibold inline-block border border-rose-500/20 w-max">2024
+                                - Atual</span>
+                        </div>
+                        <p class="text-gray-400 mb-2 leading-relaxed">
+                            Prática intensiva focada no desenvolvimento interpessoal e criativo.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-400 space-y-2">
+                            <li>Desenvolvimento de comunicação clara, assertiva e presença de palco.</li>
+                            <li>Trabalho em equipe, disciplina e postura profissional.</li>
+                            <li>Resolução de problemas sob pressão e adaptação rápida a imprevistos.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Formação e Certificações -->
+    <section id="educacao" class="py-24 bg-darker relative overflow-hidden">
+        <!-- Decoration -->
+        <div
+            class="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+                <!-- Formação Acadêmica -->
+                <div class="reveal">
+                    <h2 class="text-3xl font-heading font-bold mb-2 flex items-center gap-3">
+                        <i class="fas fa-graduation-cap text-primary"></i> Formação Acadêmica
+                    </h2>
+                    <div class="w-16 h-1 bg-primary rounded-full mb-10"></div>
+
+                    <div class="space-y-6">
+                        <div
+                            class="glass-card p-6 rounded-xl border-l-4 border-l-primary hover:border-l-secondary transition-colors">
+                            <h3 class="text-xl font-bold text-white">Tecnólogo em Análise e Desenvolvimento de Sistemas
+                            </h3>
+                            <p class="text-primary font-medium mb-2">UNIFEOB</p>
+                            <p class="text-gray-400 text-sm"><i class="far fa-calendar-alt mr-2"></i> Formado em:
+                                Julho de 2025</p>
+                        </div>
+
+                        <div
+                            class="glass-card p-6 rounded-xl border-l-4 border-l-secondary hover:border-l-primary transition-colors">
+                            <h3 class="text-xl font-bold text-white">Técnico em Administração</h3>
+                            <p class="text-secondary font-medium mb-2">Instituto Federal de São Paulo - IFSP</p>
+                            <p class="text-gray-400 text-sm"><i class="far fa-calendar-alt mr-2"></i> Início: 2026 -
+                                Conclusão prevista: 2027</p>
+                            <p class="text-gray-500 mt-2 text-sm border-t border-gray-700 pt-2">Foco em aplicar
+                                conhecimentos em gestão, inteligência artificial e ferramentas digitais para apoiar
+                                rotinas organizacionais.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificações -->
+                <div class="reveal" style="transition-delay: 200ms;">
+                    <h2 class="text-3xl font-heading font-bold mb-2 flex items-center gap-3">
+                        <i class="fas fa-certificate text-secondary"></i> Certificações & Idiomas
+                    </h2>
+                    <div class="w-16 h-1 bg-secondary rounded-full mb-10"></div>
+
+                    <div class="space-y-4">
+                        <div
+                            class="bg-white/5 border border-white/10 p-5 rounded-xl flex items-start gap-4 hover:bg-white/10 transition-colors">
+                            <div class="mt-1 text-2xl text-yellow-500"><i class="fas fa-language"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">Inglês Avançado</h4>
+                                <p class="text-gray-400 text-sm">CNA Master in English. Facilidade com leitura, escrita
+                                    e conversação formal.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white/5 border border-white/10 p-5 rounded-xl flex items-start gap-4 hover:bg-white/10 transition-colors">
+                            <div class="mt-1 text-2xl text-primary"><i class="fas fa-robot"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">AI LAB I (Inteligência Artificial)</h4>
+                                <p class="text-gray-400 text-sm">PUC-Rio. Formação sobre os fundamentos e aplicações
+                                    práticas da IA Generativa.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white/5 border border-white/10 p-5 rounded-xl flex items-start gap-4 hover:bg-white/10 transition-colors">
+                            <div class="mt-1 text-2xl text-[#FF9900]"><i class="fab fa-aws"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">AWS Academy Cloud Foundations</h4>
+                                <p class="text-gray-400 text-sm">Amazon AWS. Domínio sobre os conceitos essenciais da
+                                    nuvem AWS, segurança e arquitetura.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white/5 border border-white/10 p-5 rounded-xl flex items-start gap-4 hover:bg-white/10 transition-colors">
+                            <div class="mt-1 text-2xl text-[#1BA0D7]"><i class="fas fa-network-wired"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">CCNA: Introduction to Networks</h4>
+                                <p class="text-gray-400 text-sm">Cisco. Fundamentos de redes de computadores, protocolos
+                                    e segurança da informação.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="py-24 bg-dark relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+            <h2 class="text-3xl md:text-5xl font-heading font-bold mb-6">Vamos criar algo <span
+                    class="text-gradient">incrível</span> juntos?</h2>
+            <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+                Estou aberto a oportunidades de estágio e projetos onde eu possa aplicar minha paixão por tecnologia,
+                inteligência artificial e gestão para resolver problemas reais.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
+                <a href="mailto:rodrigoteixeira.extsj@gmail.com"
+                    class="glass-card w-full md:w-auto px-8 py-4 rounded-xl flex items-center justify-center gap-3 hover:bg-primary/20 hover:text-white transition-all group">
+                    <i class="fas fa-envelope text-2xl text-primary group-hover:scale-110 transition-transform"></i>
+                    <span
+                        class="font-medium text-gray-300 group-hover:text-white">rodrigoteixeira.extsj@gmail.com</span>
+                </a>
+
+                <a href="https://wa.me/5519971127507" target="_blank"
+                    class="glass-card w-full md:w-auto px-8 py-4 rounded-xl flex items-center justify-center gap-3 hover:bg-green-500/20 hover:text-white transition-all group border-transparent hover:border-green-500/50">
+                    <i class="fab fa-whatsapp text-2xl text-green-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium text-gray-300 group-hover:text-white">(19) 97112-7507</span>
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-6">
+                <a href="https://linkedin.com/in/rodrigo-espinosa-teixeira/" target="_blank"
+                    class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl text-gray-400 hover:text-[#0A66C2] hover:bg-white/10 transition-all shadow-lg hover:shadow-[#0A66C2]/30 transform hover:-translate-y-1">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/SEU_USER_AQUI" target="_blank"
+                    class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl text-gray-400 hover:text-white hover:bg-white/10 transition-all shadow-lg transform hover:-translate-y-1"
+                    title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+            <p class="text-gray-500 text-sm text-center">
+                &copy; <span id="year"></span> Rodrigo Espinosa Teixeira. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Update Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+            }
+        });
+
+        // Scroll Reveal Animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Trigger on load
+
+        // Translation Logic
+        const translations = {
+            en: {
+                "a[href='#home']:not(.mobile-link)": "Home",
+                "a[href='#sobre']:not(.mobile-link)": "About Me",
+                "a[href='#habilidades']:not(.mobile-link)": "Skills",
+                "a[href='#experiencia']:not(.mobile-link)": "Experience",
+                "a[href='#educacao']:not(.mobile-link)": "Education",
+                "a[href='#contato']:not(.mobile-link)": "Contact",
+                ".mobile-link[href='#home']": "Home",
+                ".mobile-link[href='#sobre']": "About Me",
+                ".mobile-link[href='#habilidades']": "Skills",
+                ".mobile-link[href='#experiencia']": "Experience",
+                ".mobile-link[href='#educacao']": "Education",
+                ".mobile-link[href='#contato']": "Contact",
+                "#home p.text-primary.font-medium": "Hello, I am",
+                "#home p.max-w-2xl": "Enthusiast of making technology work for me. I combine the power of Artificial Intelligence, software development, and assertive communication to optimize processes and create innovative solutions.",
+                "#home .text-xs.tracking-widest": "Learn more",
+                "#sobre h2": "About <span class=\"text-gradient\">Me</span>",
+                "#sobre p.text-lg:nth-of-type(1)": "I am a technology enthusiast looking for my first professional opportunity. I have a degree in <strong class=\"text-white\">Systems Analysis and Development</strong> and I am studying <strong class=\"text-white\">Business Administration</strong>. My mission is to use technology to add value, learn continuously, and generate positive results.",
+                "#sobre p.text-lg:nth-of-type(2)": "I am a practical expert in the advanced use of <strong class=\"text-primary\">Generative Artificial Intelligence</strong>. In my day-to-day work, I transform these tools into powerful allies to solve complex problems, code efficiently, and intelligently automate workflows with agility.",
+                "#sobre h3.text-xl": "<i class=\"fas fa-theater-masks text-primary\"></i> The Edge of Public Speaking",
+                "#sobre .text-sm.text-gray-400": "My experience in theater (Cena IV Shakespeare Cia.) developed my public speaking, emotional intelligence, and ability to explain complex ideas clearly, even to somewhat non-technical audiences. I can blend the objectivity of data with the warmth of human communication.",
+                "#sobre .pt-4.flex > div:nth-child(1) span": "São João da Boa Vista, SP - Brazil",
+                "#sobre .pt-4.flex > div:nth-child(2) span": "Category B Driver's License (Available for travel)",
+                "#habilidades h2": "My <span class=\"text-gradient\">Skills</span>",
+                "#habilidades p.text-gray-400": "The perfect combination of technical skills (Hard Skills) and behavioral skills (Soft Skills).",
+                "#habilidades .grid > div:nth-child(1) h3": "AI & Automation",
+                "#habilidades .grid > div:nth-child(1) ul li:nth-child(1)": "<i class=\"fas fa-check-circle text-primary text-sm\"></i> Prompt Engineering",
+                "#habilidades .grid > div:nth-child(1) ul li:nth-child(2)": "<i class=\"fas fa-check-circle text-primary text-sm\"></i> Advanced Generative AI",
+                "#habilidades .grid > div:nth-child(1) ul li:nth-child(3)": "<i class=\"fas fa-check-circle text-primary text-sm\"></i> Workflow Automation",
+                "#habilidades .grid > div:nth-child(1) ul li:nth-child(4)": "<i class=\"fas fa-check-circle text-primary text-sm\"></i> Administrative Automation",
+                "#habilidades .grid > div:nth-child(2) h3": "Dev & Data",
+                "#habilidades .grid > div:nth-child(2) .flex span:nth-child(6)": "Networking (CCNA)",
+                "#habilidades .grid > div:nth-child(3) h3": "Management & Comm",
+                "#habilidades .grid > div:nth-child(3) ul li:nth-child(1)": "<i class=\"fas fa-check-circle text-rose-400 text-sm\"></i> Public Speaking",
+                "#habilidades .grid > div:nth-child(3) ul li:nth-child(2)": "<i class=\"fas fa-check-circle text-rose-400 text-sm\"></i> Process Organization",
+                "#habilidades .grid > div:nth-child(3) ul li:nth-child(3)": "<i class=\"fas fa-check-circle text-rose-400 text-sm\"></i> Advanced Writing & English",
+                "#habilidades .grid > div:nth-child(3) ul li:nth-child(4)": "<i class=\"fas fa-check-circle text-rose-400 text-sm\"></i> Project Management",
+                "#experiencia h2": "Experience & <span class=\"text-gradient\">Projects</span>",
+                "#experiencia .border-l-2 > div:nth-child(1) h3": "Solutions Analyst / Developer",
+                "#experiencia .border-l-2 > div:nth-child(1) h4": "Moodly Project (AI Mobile App)",
+                "#experiencia .border-l-2 > div:nth-child(1) p": "Full lifecycle management of the project (prototyping, implementation, and testing). Development of a cross-platform solution for wellness monitoring and personal organization.",
+                "#experiencia .border-l-2 > div:nth-child(1) ul li:nth-child(1)": "Mobile development using <strong>Flutter</strong> focusing on User Experience (UX).",
+                "#experiencia .border-l-2 > div:nth-child(1) ul li:nth-child(2)": "Strategic implementation of <strong>Artificial Intelligence</strong> for sentiment analysis and generation of customized insights and reports.",
+                "#experiencia .border-l-2 > div:nth-child(2) h3": "Strategic and Technological Support",
+                "#experiencia .border-l-2 > div:nth-child(2) h4": "Charity Project (NGO)",
+                "#experiencia .border-l-2 > div:nth-child(2) p": "Consulting role to understand the institution's needs, proposing technological improvements and organizing administrative routines.",
+                "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(1)": "Optimization and modernization of internal processes using <strong>Node.js</strong> and <strong>MySQL</strong>.",
+                "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(2)": "Database structuring and control to facilitate management and decision making.",
+                "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(3)": "Creation of APIs, visual interfaces, and institutional presentation materials.",
+                "#experiencia .border-l-2 > div:nth-child(2) .flex span:nth-child(3)": "Consulting",
+                "#experiencia .border-l-2 > div:nth-child(2) .flex span:nth-child(4)": "Automation",
+                "#experiencia .border-l-2 > div:nth-child(3) h3": "Actor and Public Speaking Student",
+                "#experiencia .border-l-2 > div:nth-child(3) span": "2024 - Present",
+                "#experiencia .border-l-2 > div:nth-child(3) p": "Intensive practice focused on interpersonal and creative development.",
+                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(1)": "Development of clear, assertive communication and stage presence.",
+                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(2)": "Teamwork, discipline, and professional posture.",
+                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(3)": "Problem resolution under pressure and rapid adaptation to unforeseen events.",
+                "#educacao .grid > div:nth-child(1) h2": "<i class=\"fas fa-graduation-cap text-primary\"></i> Academic Education",
+                "#educacao .space-y-6 > div:nth-child(1) h3": "Technologist in Systems Analysis and Development",
+                "#educacao .space-y-6 > div:nth-child(1) p.text-gray-400": "<i class=\"far fa-calendar-alt mr-2\"></i> Completed in: July 2025",
+                "#educacao .space-y-6 > div:nth-child(2) h3": "Technical in Business Administration",
+                "#educacao .space-y-6 > div:nth-child(2) p.text-secondary": "Federal Institute of São Paulo - IFSP",
+                "#educacao .space-y-6 > div:nth-child(2) p.text-gray-400": "<i class=\"far fa-calendar-alt mr-2\"></i> Start: 2026 - Expected Graduation: 2027",
+                "#educacao .space-y-6 > div:nth-child(2) p.text-gray-500": "Focus on applying knowledge in management, artificial intelligence, and digital tools to support organizational routines.",
+                "#educacao .grid > div:nth-child(2) h2": "<i class=\"fas fa-certificate text-secondary\"></i> Certifications & Languages",
+                "#educacao .space-y-4 > div:nth-child(1) h4": "Advanced English",
+                "#educacao .space-y-4 > div:nth-child(1) p": "CNA Master in English. Ease with reading, writing, and formal conversation.",
+                "#educacao .space-y-4 > div:nth-child(2) h4": "AI LAB I (Artificial Intelligence)",
+                "#educacao .space-y-4 > div:nth-child(2) p": "PUC-Rio. Training on the fundamentals and practical applications of Generative AI.",
+                "#educacao .space-y-4 > div:nth-child(3) h4": "AWS Academy Cloud Foundations",
+                "#educacao .space-y-4 > div:nth-child(3) p": "Amazon AWS. Mastery of essential AWS cloud concepts, security, and architecture.",
+                "#educacao .space-y-4 > div:nth-child(4) h4": "CCNA: Introduction to Networks",
+                "#educacao .space-y-4 > div:nth-child(4) p": "Cisco. Fundamentals of computer networks, protocols, and information security.",
+                "#contato h2": "Let's create something <span class=\"text-gradient\">amazing</span> together?",
+                "#contato p.text-gray-400": "I am open to internship opportunities and projects where I can apply my passion for technology, artificial intelligence, and management to solve real problems.",
+                "footer p.text-gray-500": "&copy; <span id=\"year-span\"></span> Rodrigo Espinosa Teixeira. All rights reserved."
+            }
+        };
+
+        const originalPT = {};
+        let currentLang = 'pt';
+
+        // Wrap year in a consistent ID for the translation map
+        const footerSpan = document.querySelector('footer p span');
+        if (footerSpan) footerSpan.id = 'year-span';
+
+        const langToggle = document.getElementById('lang-toggle');
+        const langThumb = document.getElementById('lang-thumb');
+        const langPt = document.getElementById('lang-pt');
+        const langEn = document.getElementById('lang-en');
+
+        if (langToggle) {
+            langToggle.addEventListener('click', () => {
+                const newLang = currentLang === 'pt' ? 'en' : 'pt';
+
+                // UI Toggle Animation
+                if (newLang === 'en') {
+                    langToggle.classList.remove('bg-flag-pt');
+                    langToggle.classList.add('bg-flag-us');
+                    langThumb.classList.add('translate-x-[2.5rem]');
+                    langPt.classList.add('opacity-50', 'scale-90', 'text-white');
+                    langPt.classList.remove('scale-100', 'text-stone-900', 'drop-shadow-sm');
+                    langPt.classList.add('drop-shadow-md');
+                    langEn.classList.remove('opacity-50', 'scale-90', 'text-white', 'drop-shadow-md');
+                    langEn.classList.add('scale-100', 'text-stone-900', 'drop-shadow-sm');
+                    phrases = phrasesEN;
+                } else {
+                    langToggle.classList.remove('bg-flag-us');
+                    langToggle.classList.add('bg-flag-pt');
+                    langThumb.classList.remove('translate-x-[2.5rem]');
+                    langPt.classList.remove('opacity-50', 'scale-90', 'text-white', 'drop-shadow-md');
+                    langPt.classList.add('scale-100', 'text-stone-900', 'drop-shadow-sm');
+                    langEn.classList.add('opacity-50', 'scale-90', 'text-white', 'drop-shadow-md');
+                    langEn.classList.remove('scale-100', 'text-stone-900', 'drop-shadow-sm');
+                    phrases = phrasesPT;
+                }
+
+                // Gather target elements
+                const translatables = [];
+                for (let selector in translations.en) {
+                    const el = document.querySelector(selector);
+                    if (el) translatables.push({ el, selector });
+                }
+
+                // 1. Fade out smoothly
+                translatables.forEach(({ el }) => {
+                    el.style.transition = 'opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease';
+                    el.style.opacity = '0';
+                    el.style.filter = 'blur(4px)';
+                    el.style.transform = 'translateY(4px)';
+                });
+
+                // 2. Wait and swap text
+                setTimeout(() => {
+                    translatables.forEach(({ el, selector }) => {
+                        if (newLang === 'en') {
+                            if (!originalPT[selector]) originalPT[selector] = el.innerHTML;
+                            el.innerHTML = translations.en[selector];
+                        } else {
+                            if (originalPT[selector]) el.innerHTML = originalPT[selector];
+                        }
+                    });
+
+                    // Keep the year updated
+                    const yearSpanRe = document.getElementById('year-span');
+                    if (yearSpanRe) yearSpanRe.textContent = new Date().getFullYear();
+
+                    // 3. Fade back in
+                    requestAnimationFrame(() => {
+                        translatables.forEach(({ el }) => {
+                            el.style.opacity = '1';
+                            el.style.filter = 'blur(0px)';
+                            el.style.transform = 'translateY(0)';
+                        });
+                    });
+                }, 300);
+
+                currentLang = newLang;
+            });
+        }
+
+        // Typing Effect Engine
+        const phrasesPT = [
+            "Analista e Desenvolvedor de Sistemas",
+            "Apaixonado por Inteligência Artificial",
+            "Entusiasta em Automação"
+        ];
+        const phrasesEN = [
+            "Systems Analyst and Developer",
+            "Passionate about Artificial Intelligence",
+            "Automation Enthusiast"
+        ];
+
+        let phrases = phrasesPT;
+
+        let phraseIndex = 0;
+        let letterIndex = 0;
+        let currentText = '';
+        let isDeleting = false;
+        const typingElement = document.getElementById('typing-text');
+
+        function type() {
+            if (!typingElement) return;
+
+            // Make sure phraseIndex wraps correctly if arrays length changes dynamically
+            if (phraseIndex >= phrases.length) phraseIndex = 0;
+            const fullText = phrases[phraseIndex];
+
+            // Auto-clear quickly if the language was switched mid-typing to avoid letter salad
+            if (!fullText.startsWith(currentText) && !isDeleting) {
+                isDeleting = true;
+            }
+
+            if (isDeleting) {
+                currentText = currentText.substring(0, currentText.length - 1);
+            } else {
+                currentText = fullText.substring(0, currentText.length + 1);
+            }
+
+            typingElement.textContent = currentText;
+
+            let typeSpeed = 100;
+            if (isDeleting) typeSpeed /= 2;
+
+            if (!isDeleting && currentText === fullText) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && currentText === '') {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Iniciar digitação após um pequeno delay
+        setTimeout(type, 1000);
+
+    </script>
+</body>
+
+</html>
