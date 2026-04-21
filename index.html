@@ -315,12 +315,20 @@
                 <div class="reveal">
                     <div class="relative">
                         <!-- Foto de Perfil / Carrossel -->
-                        <div
-                            class="aspect-square rounded-2xl bg-gradient-to-tr from-stone-800 to-stone-900 border border-stone-700 flex items-center justify-center overflow-hidden shadow-2xl relative z-10 group">
-                            <img src="foto luz.jpg" alt="Rodrigo Teixeira" class="profile-img-fade">
-                            <img src="eu polo.png" alt="Rodrigo Teixeira" class="profile-img-fade">
-                            <img src="eu teatro.png" alt="Rodrigo Teixeira" class="profile-img-fade">
-                        </div>
+                        <a href="sao-joao.html" class="block group relative">
+                            <div
+                                class="aspect-square rounded-2xl bg-gradient-to-tr from-stone-800 to-stone-900 border border-stone-700 flex items-center justify-center overflow-hidden shadow-2xl relative z-10">
+                                <img src="foto luz.jpg" alt="Rodrigo Teixeira" class="profile-img-fade">
+                                <img src="eu polo.png" alt="Rodrigo Teixeira" class="profile-img-fade">
+                                <img src="eu teatro.png" alt="Rodrigo Teixeira" class="profile-img-fade">
+                                <!-- Easter Egg Hint Overlay -->
+                                <div
+                                    class="absolute inset-0 bg-darker/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center z-20 backdrop-blur-sm">
+                                    <i class="fas fa-map-marker-alt text-4xl text-primary mb-2 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500"></i>
+                                    <span class="easter-egg-text text-white font-medium text-sm tracking-wide px-4 text-center">Conheça minha cidade</span>
+                                </div>
+                            </div>
+                        </a>
                         <div
                             class="absolute -inset-4 border-2 border-primary/30 rounded-2xl z-0 transform translate-x-4 translate-y-4">
                         </div>
@@ -949,10 +957,10 @@
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('shadow-lg');
-                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                navbar.style.background = 'rgba(28, 25, 23, 0.95)'; // Stone 900
             } else {
                 navbar.classList.remove('shadow-lg');
-                navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+                navbar.style.background = 'rgba(28, 25, 23, 0.8)'; // Stone 900 with opacity
             }
         });
 
@@ -1012,6 +1020,8 @@
                 "#habilidades .grid > div:nth-child(3) ul li:nth-child(3)": "<i class=\"fas fa-check-circle text-rose-400 text-sm\"></i> Advanced Writing & English",
                 "#habilidades .grid > div:nth-child(3) ul li:nth-child(4)": "<i class=\"fas fa-check-circle text-rose-400 text-sm\"></i> Project Management",
                 "#experiencia h2": "Experience & <span class=\"text-gradient\">Projects</span>",
+                
+                // 1. ROI Engine
                 "#experiencia .border-l-2 > div:nth-child(1) h3": "🤖 AI-Native ROI Engine",
                 "#experiencia .border-l-2 > div:nth-child(1) h4": "B2B Lead Generation Platform",
                 "#experiencia .border-l-2 > div:nth-child(1) p.roi-description": "I engineered a high-performance 0→1 MVP of an interactive ROI Calculator designed as a premium B2B Lead Magnet. This platform uses an Agentic AI backend to analyze business metrics in real-time and generate a personalized, 3-paragraph Growth Diagnostic for every lead.",
@@ -1021,7 +1031,8 @@
                 "#experiencia .border-l-2 > div:nth-child(1) ul.roi-features li:nth-child(4)": "Corporate email validation with Supabase RLS for secure lead capture.",
                 "#experiencia .border-l-2 > div:nth-child(1) ul.roi-features li:nth-child(5)": "Fluid micro-interactions with Framer Motion.",
                 "#experiencia .border-l-2 > div:nth-child(1) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fas fa-external-link-alt\"></i> 🌐 Access Platform",
-                "#experiencia .border-l-2 > div:nth-child(1) .p-3": "<i class=\"fas fa-info-circle mr-2\"></i> <span class=\"roi-vibe\">\"I operate natively within agentic-first workflows, bridging the gap between rapid prototyping and production-grade software.\"</span>",
+
+                // 2. Pulse AI
                 "#experiencia .border-l-2 > div:nth-child(2) h3": "💓 Pulse AI",
                 "#experiencia .border-l-2 > div:nth-child(2) h4": "AI-Native CRM for Gyms",
                 "#experiencia .border-l-2 > div:nth-child(2) p": "Local gyms lose $3,000+/month to silent churn, members who quietly stop showing up. I built Pulse AI, an AI-native CRM that tracks membership health and generates personalized LLM-powered win-back strategies with one click.",
@@ -1030,50 +1041,61 @@
                 "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(3)": "AI-generated retention plans with one click.",
                 "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(4)": "Full CRUD member management via Server Actions.",
                 "#experiencia .border-l-2 > div:nth-child(2) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fas fa-external-link-alt\"></i> 🌐 Access System",
-                "#experiencia .border-l-2 > div:nth-child(2) .p-3": "<i class=\"fas fa-info-circle mr-2\"></i> Free demo: demo@pulsecrm.com / demo123",
+                "#experiencia .border-l-2 > div:nth-child(2) .p-3 span": "Free demo: demo@pulsecrm.com / demo123",
+
+                // 3. APEX MOTORS
                 "#experiencia .border-l-2 > div:nth-child(3) h3": "🏎️ APEX MOTORS (Early stages)",
-                "#experiencia .border-l-2 > div:nth-child(2) h4": "Awwwards-inspired automotive showcase",
-                "#experiencia .border-l-2 > div:nth-child(2) p": "Project focused on a premium automotive experience with cinematic motion, <strong>glassmorphism</strong>, and immersive interactions inspired by Awwwards-level visual standards.",
-                "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(1)": "High-performance browsing experience with Framer Motion animations.",
-                "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(2)": "Modern interface focused on premium visuals and responsive micro-interactions.",
-                "#experiencia .border-l-2 > div:nth-child(2) ul li:nth-child(3)": "Public live deployment available for showcasing the project's early stages.",
-                "#experiencia .border-l-2 > div:nth-child(2) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fas fa-external-link-alt\"></i> 🌐 Live Demo",
-                "#experiencia .border-l-2 > div:nth-child(2) .flex.flex-wrap.gap-4 > a:nth-child(2)": "<i class=\"fab fa-github\"></i> Repository",
-                "#experiencia .border-l-2 > div:nth-child(3) h3": "Front-End Engineer",
-                "#experiencia .border-l-2 > div:nth-child(3) h4": "Aurora Coffee (E-commerce / Boutique UI)",
-                "#experiencia .border-l-2 > div:nth-child(3) p": "Development of a premium interface for artisanal coffee e-commerce conversions. Absolute focus on <strong>Aesthetics</strong>, accessibility, and high-level user experience.",
-                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(1)": "Implementation of a brand-adapted <strong>Roast Switcher</strong> (Dark/Light mode).",
-                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(2)": "Cinematic horizontal scroll built with Framer Motion.",
-                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(3)": "Modern and performant architecture using <strong>Next.js and Tailwind CSS</strong>.",
-                "#experiencia .border-l-2 > div:nth-child(3) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fas fa-external-link-alt\"></i> View Deploy",
+                "#experiencia .border-l-2 > div:nth-child(3) h4": "Awwwards-inspired automotive showcase",
+                "#experiencia .border-l-2 > div:nth-child(3) p": "Project focused on a premium automotive experience with cinematic motion, <strong>glassmorphism</strong>, and immersive interactions inspired by Awwwards-level visual standards.",
+                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(1)": "High-performance browsing experience with Framer Motion animations.",
+                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(2)": "Modern interface focused on premium visuals and responsive micro-interactions.",
+                "#experiencia .border-l-2 > div:nth-child(3) ul li:nth-child(3)": "Public live deployment available for showcasing the project's early stages.",
+                "#experiencia .border-l-2 > div:nth-child(3) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fas fa-external-link-alt\"></i> 🌐 Live Demo",
                 "#experiencia .border-l-2 > div:nth-child(3) .flex.flex-wrap.gap-4 > a:nth-child(2)": "<i class=\"fab fa-github\"></i> Repository",
-                "#experiencia .border-l-2 > div:nth-child(4) h3": "Python Developer & Automation",
-                "#experiencia .border-l-2 > div:nth-child(4) h4": "S.A.R. (Routine Automation System)",
-                "#experiencia .border-l-2 > div:nth-child(4) p": "Creation of a robust corporate dashboard focused on sensitive spreadsheet manipulation and cross-referencing. Offline-first architecture for secure banking data handling (<em>LGPD-compliant</em>).",
-                "#experiencia .border-l-2 > div:nth-child(4) ul li:nth-child(1)": "Advanced data processing using <strong>Pandas and OpenPyXL</strong>.",
-                "#experiencia .border-l-2 > div:nth-child(4) ul li:nth-child(2)": "Visual interface and optimized interaction flow via <strong>Streamlit</strong>.",
-                "#experiencia .border-l-2 > div:nth-child(4) ul li:nth-child(3)": "Automatic data treatment and isolated report generation on <em>localhost</em>.",
-                "#experiencia .border-l-2 > div:nth-child(4) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fab fa-github\"></i> Repository",
-                "#experiencia .border-l-2 > div:nth-child(5) h3": "Solutions Analyst / Developer",
-                "#experiencia .border-l-2 > div:nth-child(5) h4": "Moodly Project (AI Mobile App)",
-                "#experiencia .border-l-2 > div:nth-child(5) p": "Full lifecycle management of the project (prototyping, implementation, and testing). Development of a cross-platform solution for wellness monitoring and personal organization.",
-                "#experiencia .border-l-2 > div:nth-child(5) ul li:nth-child(1)": "Mobile development using <strong>Flutter</strong> focusing on User Experience (UX).",
-                "#experiencia .border-l-2 > div:nth-child(5) ul li:nth-child(2)": "Strategic implementation of <strong>Artificial Intelligence</strong> for sentiment analysis and generation of customized insights and reports.",
+
+                // 4. Front-End Engineer
+                "#experiencia .border-l-2 > div:nth-child(4) h3": "Front-End Engineer",
+                "#experiencia .border-l-2 > div:nth-child(4) h4": "Aurora Coffee (E-commerce / Boutique UI)",
+                "#experiencia .border-l-2 > div:nth-child(4) p": "Development of a premium interface for artisanal coffee e-commerce conversions. Absolute focus on <strong>Aesthetics</strong>, accessibility, and high-level user experience.",
+                "#experiencia .border-l-2 > div:nth-child(4) ul li:nth-child(1)": "Implementation of a brand-adapted <strong>Roast Switcher</strong> (Dark/Light mode).",
+                "#experiencia .border-l-2 > div:nth-child(4) ul li:nth-child(2)": "Cinematic horizontal scroll built with Framer Motion.",
+                "#experiencia .border-l-2 > div:nth-child(4) ul li:nth-child(3)": "Modern and performant architecture using <strong>Next.js and Tailwind CSS</strong>.",
+                "#experiencia .border-l-2 > div:nth-child(4) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fas fa-external-link-alt\"></i> View Deploy",
+                "#experiencia .border-l-2 > div:nth-child(4) .flex.flex-wrap.gap-4 > a:nth-child(2)": "<i class=\"fab fa-github\"></i> Repository",
+
+                // 5. Python Developer & Automation
+                "#experiencia .border-l-2 > div:nth-child(5) h3": "Python Developer & Automation",
+                "#experiencia .border-l-2 > div:nth-child(5) h4": "S.A.R. (Routine Automation System)",
+                "#experiencia .border-l-2 > div:nth-child(5) p": "Creation of a robust corporate dashboard focused on sensitive spreadsheet manipulation and cross-referencing. Offline-first architecture for secure banking data handling (<em>LGPD-compliant</em>).",
+                "#experiencia .border-l-2 > div:nth-child(5) ul li:nth-child(1)": "Advanced data processing using <strong>Pandas and OpenPyXL</strong>.",
+                "#experiencia .border-l-2 > div:nth-child(5) ul li:nth-child(2)": "Visual interface and optimized interaction flow via <strong>Streamlit</strong>.",
+                "#experiencia .border-l-2 > div:nth-child(5) ul li:nth-child(3)": "Automatic data treatment and isolated report generation on <em>localhost</em>.",
                 "#experiencia .border-l-2 > div:nth-child(5) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fab fa-github\"></i> Repository",
-                "#experiencia .border-l-2 > div:nth-child(6) h3": "Strategic and Technological Support",
-                "#experiencia .border-l-2 > div:nth-child(6) h4": "Charity Project (NGO)",
-                "#experiencia .border-l-2 > div:nth-child(6) p": "Consulting role to understand the institution's needs, proposing technological improvements and organizing administrative routines.",
-                "#experiencia .border-l-2 > div:nth-child(6) ul li:nth-child(1)": "Optimization and modernization of internal processes using <strong>Node.js</strong> and <strong>MySQL</strong>.",
-                "#experiencia .border-l-2 > div:nth-child(6) ul li:nth-child(2)": "Database structuring and control to facilitate management and decision making.",
-                "#experiencia .border-l-2 > div:nth-child(6) ul li:nth-child(3)": "Creation of APIs, visual interfaces, and institutional presentation materials.",
-                "#experiencia .border-l-2 > div:nth-child(6) .flex span:nth-child(3)": "Consulting",
-                "#experiencia .border-l-2 > div:nth-child(6) .flex span:nth-child(4)": "Automation",
-                "#experiencia .border-l-2 > div:nth-child(7) h3": "Actor and Public Speaking Student",
-                "#experiencia .border-l-2 > div:nth-child(7) span": "2024 - Present",
-                "#experiencia .border-l-2 > div:nth-child(7) p": "Intensive practice focused on interpersonal and creative development.",
-                "#experiencia .border-l-2 > div:nth-child(7) ul li:nth-child(1)": "Development of clear, assertive communication and stage presence.",
-                "#experiencia .border-l-2 > div:nth-child(7) ul li:nth-child(2)": "Teamwork, discipline, and professional posture.",
-                "#experiencia .border-l-2 > div:nth-child(7) ul li:nth-child(3)": "Problem resolution under pressure and rapid adaptation to unforeseen events.",
+
+                // 6. Solutions Analyst / Developer
+                "#experiencia .border-l-2 > div:nth-child(6) h3": "Solutions Analyst / Developer",
+                "#experiencia .border-l-2 > div:nth-child(6) h4": "Moodly Project (AI Mobile App)",
+                "#experiencia .border-l-2 > div:nth-child(6) p": "Full lifecycle management of the project (prototyping, implementation, and testing). Development of a cross-platform solution for wellness monitoring and personal organization.",
+                "#experiencia .border-l-2 > div:nth-child(6) ul li:nth-child(1)": "Mobile development using <strong>Flutter</strong> focusing on User Experience (UX).",
+                "#experiencia .border-l-2 > div:nth-child(6) ul li:nth-child(2)": "Strategic implementation of <strong>Artificial Intelligence</strong> for sentiment analysis and generation of customized insights and reports.",
+                "#experiencia .border-l-2 > div:nth-child(6) .flex.flex-wrap.gap-4 > a:nth-child(1)": "<i class=\"fab fa-github\"></i> Repository",
+
+                // 7. Strategic and Technological Support
+                "#experiencia .border-l-2 > div:nth-child(7) h3": "Strategic and Technological Support",
+                "#experiencia .border-l-2 > div:nth-child(7) h4": "Charity Project (NGO)",
+                "#experiencia .border-l-2 > div:nth-child(7) p": "Consulting role to understand the institution's needs, proposing technological improvements and organizing administrative routines.",
+                "#experiencia .border-l-2 > div:nth-child(7) ul li:nth-child(1)": "Optimization and modernization of internal processes using <strong>Node.js</strong> and <strong>MySQL</strong>.",
+                "#experiencia .border-l-2 > div:nth-child(7) ul li:nth-child(2)": "Database structuring and control to facilitate management and decision making.",
+                "#experiencia .border-l-2 > div:nth-child(7) ul li:nth-child(3)": "Creation of APIs, visual interfaces, and institutional presentation materials.",
+
+                // 8. Actor and Oratory
+                "#experiencia .border-l-2 > div:nth-child(8) h3": "Actor and Public Speaking Student",
+                "#experiencia .border-l-2 > div:nth-child(8) h4": "Cena IV Shakespeare Cia.",
+                "#experiencia .border-l-2 > div:nth-child(8) p": "Intensive practice focused on interpersonal and creative development.",
+                "#experiencia .border-l-2 > div:nth-child(8) ul li:nth-child(1)": "Development of clear, assertive communication and stage presence.",
+                "#experiencia .border-l-2 > div:nth-child(8) ul li:nth-child(2)": "Teamwork, discipline, and professional posture.",
+                "#experiencia .border-l-2 > div:nth-child(8) ul li:nth-child(3)": "Problem resolution under pressure and rapid adaptation to unforeseen events.",
+
                 "#educacao .grid > div:nth-child(1) h2": "<i class=\"fas fa-graduation-cap text-primary\"></i> Academic Education",
                 "#educacao .space-y-6 > div:nth-child(1) h3": "Technologist in Systems Analysis and Development",
                 "#educacao .space-y-6 > div:nth-child(1) p.text-gray-400": "<i class=\"far fa-calendar-alt mr-2\"></i> Completed in: July 2025",
@@ -1092,6 +1114,7 @@
                 "#educacao .space-y-4 > div:nth-child(4) p": "Cisco. Fundamentals of computer networks, protocols, and information security.",
                 "#contato h2": "Let's create something <span class=\"text-gradient\">amazing</span> together?",
                 "#contato p.text-gray-400": "I am open to internship opportunities and projects where I can apply my passion for technology, artificial intelligence, and management to solve real problems.",
+                ".easter-egg-text": "Discover my hometown",
                 "footer p.text-gray-500": "&copy; <span id=\"year-span\"></span> Rodrigo Espinosa Teixeira. All rights reserved."
             }
         };
