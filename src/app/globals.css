@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #ea580c;
+  --color-secondary: #14b8a6;
+  --color-dark: #1c1917;
+  --color-darker: #0c0a09;
+  
+  --font-sans: var(--font-dm-sans), sans-serif;
+  --font-heading: var(--font-outfit), sans-serif;
+
+  --animate-blob: blob 7s infinite;
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes profileFadeAnim {
+  0%, 25% { opacity: 1; }
+  33%, 92% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@layer utilities {
+  .glass-nav {
+    background: rgba(28, 25, 23, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card {
+    background: rgba(41, 37, 36, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(234, 88, 12, 0.3);
+    border-color: rgba(234, 88, 12, 0.5);
+  }
+
+  .text-gradient {
+    background: linear-gradient(to right, #ea580c, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+  }
+
+  .profile-img-fade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: profileFadeAnim 12s infinite ease-in-out;
+    transition: transform 0.5s ease;
+  }
+
+  .profile-img-fade:nth-child(1) { animation-delay: 0s; }
+  .profile-img-fade:nth-child(2) { animation-delay: 4s; }
+  .profile-img-fade:nth-child(3) { animation-delay: 8s; }
+
+  .group:hover .profile-img-fade {
+    transform: scale(1.05);
+  }
+
+  .bg-flag-pt {
+    background: linear-gradient(135deg, #009c3b 35%, #ffdf00 50%, #002776 65%);
+    background-size: 200% 200%;
+    animation: moveGradient 4s ease infinite alternate;
+  }
+
+  .bg-flag-us {
+    background: linear-gradient(135deg, #0a3161 35%, #ffffff 50%, #b31942 65%);
+    background-size: 200% 200%;
+    animation: moveGradient 4s ease infinite alternate;
+  }
+}
+
+@keyframes moveGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
